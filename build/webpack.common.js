@@ -1,10 +1,16 @@
 const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require('webpack')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
+const argv = require('yargs-parser')(process.argv.slice(1))
+const APP_ENV = argv.env || 'dev'
+const envConfig = require('./env.json')
+const oriEnv = envConfig[APP_ENV]
 
 module.exports = {
   entry: path.join(__dirname, "../src/index.tsx"),
   output: {
-    filename: "bundle.js",
+    filename: "js/[name].[hash].js",
     path: path.join(__dirname, "../dist")
   },
   module: {
@@ -23,7 +29,7 @@ module.exports = {
         test: /\.scss$/,
         include: path.join(__dirname, '../src'),
         use: [{
-            loader: "style-loader"
+            loader: APP_ENV !== 'dev' ? MiniCssExtractPlugin.loader : "style-loader"
         }, {
             loader: "css-loader"
         }, 
@@ -84,21 +90,7 @@ module.exports = {
         '@img': path.resolve('../src/images')
     }    
   },
-  devServer: {
-    host: "localhost",
-    port: 3000,
-    historyApiFallback: true, // ??
-    overlay: {
-      errors: true
-    },
-    inline: true,
-    hot: true
-  },
   plugins: [
-    new HtmlWebpackPlugin({
-      filename: "index.html",
-      template: "public/index.html",
-      inject: true
-    })
+    new webpack.DefinePlugin(oriEnv),
   ]
 };
