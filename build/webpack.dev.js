@@ -5,8 +5,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const devConfig = {
     mode: 'development',
-    devtool: 'eval-source-map',
-    plugin: [
+    devtool: 'cheap-module-eval-source-map',
+    plugins: [
         new HtmlWebpackPlugin({
             filename: "index.html",
             template: "public/index.html",
@@ -25,5 +25,5 @@ const devConfig = {
         hot: true
     }
 }
-
+console.log(JSON.stringify(merge(baseConfig, devConfig), null, 2))
 module.exports = merge(baseConfig, devConfig)

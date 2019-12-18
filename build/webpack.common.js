@@ -8,7 +8,9 @@ const envConfig = require('./env.json')
 const oriEnv = envConfig[APP_ENV]
 
 module.exports = {
-  entry: path.join(__dirname, "../src/index.tsx"),
+  entry: {
+    'app': path.join(__dirname, "../src/index.tsx")
+  },
   output: {
     filename: "js/[name].[hash].js",
     path: path.join(__dirname, "../dist")
@@ -20,7 +22,10 @@ module.exports = {
         include: path.join(__dirname, '../src'),
         use: [
             {
-                loader: 'babel-loader'
+                loader: 'ts-loader',
+                options: {
+                  transpileOnly: true
+                }
             }
         ],
         exclude: /node_modules/
@@ -86,8 +91,7 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
     alias: {
-        '@': path.resolve('../src'),
-        '@img': path.resolve('../src/images')
+        '@': path.resolve('./src'),
     }    
   },
   plugins: [

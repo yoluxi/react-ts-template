@@ -1,7 +1,8 @@
 import * as React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Button } from 'antd'
-
+import smallImg from './images/WechatIMG432.jpeg'
+import dayImg from '@/images/day.png'
 export default function Routers() {
   return (
     <Router>
@@ -42,9 +43,9 @@ function Home() {
 }
 
 function About() {
-  return <h2>About</h2>;
+  return <h2><img src={dayImg} alt=""/></h2>;
 }
 
 function Users() {
-  return <h2>Users</h2>;
+  return <h2><img src={smallImg} alt=""/></h2>;
 }

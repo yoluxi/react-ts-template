@@ -3,12 +3,11 @@ const merge = require("webpack-merge");
 const baseConfig = require("./webpack.common");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CleanWebpackPlugin = require("clean-webpack-plugin")
+const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 const ScriptExtHtmlWebpackPlugin = require("script-ext-html-webpack-plugin");
 
 const prodConfig = {
   mode: "production",
-  devtool: "source-map",
   plugins: [
     new HtmlWebpackPlugin({
       filename: "index.html",
@@ -32,7 +31,10 @@ const prodConfig = {
     new CleanWebpackPlugin(), // 清除文件
   ],
   optimization: { // 性能配置
-    runtimeChunk: true  
+    runtimeChunk: true,
+    splitChunks: {
+      chunks: 'all',
+    },
   }
 };
 
